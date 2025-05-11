@@ -1,0 +1,11 @@
+/mvnw text eol=lf
+*.cmd text eol=crlf
+
+# Normalisation des fins de ligne
+* text=auto
+
+# Fichiers binaires (ne pas tenter de faire des diffs dessus)
+*.jar binary
+*.png binary
+*.jpg binary
+*.ico binary
