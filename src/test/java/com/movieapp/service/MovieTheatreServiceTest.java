@@ -1,5 +1,6 @@
 package com.movieapp.service;
 
+import com.movieapp.exception.ResourceNotFoundException;
 import com.movieapp.model.MovieTheatre;
 import com.movieapp.repository.MovieTheatreRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,14 +34,19 @@ class MovieTheatreServiceTest {
     }
 
     @Test
-    void testFindById() {
-        MovieTheatre obj = new MovieTheatre();
-        obj.setId(1);
-        when(movieTheatreRepository.findById(1)).thenReturn(Optional.of(obj));
-        Optional<Object> result = Optional.ofNullable(movieTheatreService.getProjectionById(1));
+    void testFindById_Found() {
+        MovieTheatre theatre = new MovieTheatre();
+        theatre.setId(1);
+
+        when(movieTheatreRepository.findById(1)).thenReturn(Optional.of(theatre));
+
+        Optional<MovieTheatre> result = movieTheatreService.getProjectionById(1); // or getMovieTheatreById()
+
         assertTrue(result.isPresent());
-        assertEquals(1, result.get().getClass());
+        assertEquals(1, result.get().getId());
+        verify(movieTheatreRepository, times(1)).findById(1);
     }
+
 
     @Test
     void testSave() {
@@ -52,7 +58,25 @@ class MovieTheatreServiceTest {
 
     @Test
     void testDelete() {
+        when(movieTheatreRepository.existsById(1)).thenReturn(true);
+
         movieTheatreService.deleteProjection(1);
+
+        verify(movieTheatreRepository).existsById(1);
         verify(movieTheatreRepository).deleteById(1);
     }
+
+    @Test
+    void testDelete_NotFound() {
+        when(movieTheatreRepository.existsById(1)).thenReturn(false);
+
+        ResourceNotFoundException thrown = assertThrows(
+                ResourceNotFoundException.class,
+                () -> movieTheatreService.deleteProjection(1)
+        );
+
+        assertTrue(thrown.getMessage().contains("projection non trouvée"));
+        verify(movieTheatreRepository, never()).deleteById(anyInt());
+    }
+
 }

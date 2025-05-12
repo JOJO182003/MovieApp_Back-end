@@ -1,5 +1,6 @@
 package com.movieapp.service;
 
+import com.movieapp.exception.ResourceNotFoundException;
 import com.movieapp.model.User;
 import com.movieapp.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,8 +52,26 @@ class UserServiceTest {
     }
 
     @Test
-    void testDelete() {
+    void testDeleteUser_Found() {
+        when(userRepository.existsById(1)).thenReturn(true);
+
         userService.deleteUser(1);
+
+        verify(userRepository).existsById(1);
         verify(userRepository).deleteById(1);
     }
+
+    @Test
+    void testDeleteUser_NotFound() {
+        when(userRepository.existsById(1)).thenReturn(false);
+
+        ResourceNotFoundException thrown = assertThrows(
+                ResourceNotFoundException.class,
+                () -> userService.deleteUser(1)
+        );
+
+        assertTrue(thrown.getMessage().contains("utilisateur non trouvé"));
+        verify(userRepository, never()).deleteById(anyInt());
+    }
+
 }

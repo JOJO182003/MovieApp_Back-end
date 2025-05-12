@@ -1,5 +1,6 @@
 package com.movieapp.service;
 
+import com.movieapp.exception.ResourceNotFoundException;
 import com.movieapp.model.Movie;
 import com.movieapp.repository.MovieRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -95,8 +96,34 @@ class MovieServiceTest {
     }
 
     @Test
-    void testDelete() {
+    void testDeleteMovie_Found() {
+        // On simule que le film avec l'ID 1 existe
+        when(movieRepository.existsById(1)).thenReturn(true);
+
+        // On appelle la méthode à tester
         movieService.deleteMovie(1);
-        verify(movieRepository, times(1)).deleteById(1);
+
+        // On vérifie que les bonnes méthodes ont été appelées
+        verify(movieRepository).existsById(1);
+        verify(movieRepository).deleteById(1);
     }
+
+    @Test
+    void testDeleteMovie_NotFound() {
+        // On simule que le film avec l'ID 1 n'existe pas
+        when(movieRepository.existsById(1)).thenReturn(false);
+
+        // On vérifie que la méthode lance bien l'exception attendue
+        ResourceNotFoundException thrown = assertThrows(
+                ResourceNotFoundException.class,
+                () -> movieService.deleteMovie(1)
+        );
+
+        // Optionnel : on vérifie le message d'erreur
+        assertTrue(thrown.getMessage().contains("aucun film avec l'ID"));
+
+        // On vérifie que la suppression n’a jamais été appelée
+        verify(movieRepository, never()).deleteById(anyInt());
+    }
+
 }

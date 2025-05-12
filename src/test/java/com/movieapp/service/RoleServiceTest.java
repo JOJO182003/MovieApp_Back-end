@@ -1,5 +1,6 @@
 package com.movieapp.service;
 
+import com.movieapp.exception.ResourceNotFoundException;
 import com.movieapp.model.Role;
 import com.movieapp.repository.RoleRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,8 +52,25 @@ class RoleServiceTest {
     }
 
     @Test
-    void testDelete() {
+    void testDeleteRole_Found() {
+        when(roleRepository.existsById(1)).thenReturn(true);
+
         roleService.deleteRole(1);
+
+        verify(roleRepository).existsById(1);
         verify(roleRepository).deleteById(1);
+    }
+
+    @Test
+    void testDeleteRole_NotFound() {
+        when(roleRepository.existsById(1)).thenReturn(false);
+
+        ResourceNotFoundException thrown = assertThrows(
+                ResourceNotFoundException.class,
+                () -> roleService.deleteRole(1)
+        );
+
+        assertTrue(thrown.getMessage().contains("rôle inexistant"));
+        verify(roleRepository, never()).deleteById(anyInt());
     }
 }

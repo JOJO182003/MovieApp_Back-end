@@ -1,5 +1,6 @@
 package com.movieapp.service;
 
+import com.movieapp.exception.ResourceNotFoundException;
 import com.movieapp.model.Theatre;
 import com.movieapp.repository.TheatreRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,8 +52,25 @@ class TheatreServiceTest {
     }
 
     @Test
-    void testDelete() {
+    void testDeleteTheatre_Found() {
+        when(theatreRepository.existsById(1)).thenReturn(true);
+
         theatreService.deleteTheatre(1);
+
+        verify(theatreRepository).existsById(1);
         verify(theatreRepository).deleteById(1);
+    }
+
+    @Test
+    void testDeleteTheatre_NotFound() {
+        when(theatreRepository.existsById(1)).thenReturn(false);
+
+        ResourceNotFoundException thrown = assertThrows(
+                ResourceNotFoundException.class,
+                () -> theatreService.deleteTheatre(1)
+        );
+
+        assertTrue(thrown.getMessage().contains("théâtre non trouvé")); // correspond au vrai message
+        verify(theatreRepository, never()).deleteById(anyInt());
     }
 }
