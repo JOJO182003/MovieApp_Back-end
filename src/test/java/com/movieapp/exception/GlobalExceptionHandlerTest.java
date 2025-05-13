@@ -1,5 +1,6 @@
 package com.movieapp.exception;
 
+import com.movieapp.exception.handler.GlobalExceptionHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 

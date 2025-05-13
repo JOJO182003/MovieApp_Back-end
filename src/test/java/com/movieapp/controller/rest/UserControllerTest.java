@@ -1,5 +1,6 @@
 package com.movieapp.controller.rest;
 
+import com.movieapp.api.rest.controller.UserController;
 import com.movieapp.application.service.UserService;
 import com.movieapp.domain.model.User;
 import com.movieapp.util.TestDataFactory;

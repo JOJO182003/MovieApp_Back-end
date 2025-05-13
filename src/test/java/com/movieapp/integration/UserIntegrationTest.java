@@ -1,7 +1,7 @@
 package com.movieapp.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.movieapp.dto.request.CreateUserRequest;
+import com.movieapp.api.rest.dto.request.CreateUserRequest;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

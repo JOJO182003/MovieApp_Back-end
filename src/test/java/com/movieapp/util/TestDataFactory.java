@@ -1,6 +1,7 @@
 package com.movieapp.util;
 
 import com.movieapp.domain.model.*;
+import com.movieapp.infrastructure.persistence.entity.RoleEntity;
 import com.movieapp.infrastructure.persistence.entity.UserEntity;
 import com.movieapp.infrastructure.persistence.entity.UserTheatreAssignmentEntity;
 
@@ -25,6 +26,13 @@ public class TestDataFactory {
         return new Role(3, "moderator");
     }
 
+    public static RoleEntity roleEntityOwner() {
+        return RoleEntity.builder()
+                .id(2)
+                .name("propriétaires de cinéma")
+                .build();
+    }
+
     // ==== THEATRES ====
 
     public static Theatre theatreLyon1() {
@@ -44,7 +52,7 @@ public class TestDataFactory {
     }
 
     public static Theatre theatreBordeaux11() {
-        return new Theatre(11, "Studio Ciné 11", "Bordeaux", "48 rue Sainte-Catherine");
+        return new Theatre(11, "CGR Bordeaux", "Bordeaux", "48 rue Sainte-Catherine");
     }
 
     public static Theatre theatreNice12() {
@@ -52,6 +60,15 @@ public class TestDataFactory {
     }
 
     // ==== USERS ====
+    public static UserEntity ownerUserEntity() {
+        return UserEntity.builder()
+                .id(34)
+                .username("owner1")
+                .email("owner1@movieapp.com")
+                .passwordHash("hashed_owner")
+                .role(roleEntityOwner()) // lien vers le rôle
+                .build();
+    }
 
     public static UserEntity adminUserEntity() {
         return UserEntity.builder()

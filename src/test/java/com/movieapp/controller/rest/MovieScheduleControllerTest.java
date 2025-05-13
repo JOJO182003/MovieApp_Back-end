@@ -1,5 +1,6 @@
 package com.movieapp.controller.rest;
 
+import com.movieapp.api.rest.controller.MovieScheduleController;
 import com.movieapp.application.service.MovieScheduleService;
 import com.movieapp.domain.model.MovieSchedule;
 import org.junit.jupiter.api.Test;

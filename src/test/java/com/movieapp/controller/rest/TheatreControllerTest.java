@@ -1,5 +1,6 @@
 package com.movieapp.controller.rest;
 
+import com.movieapp.api.rest.controller.TheatreController;
 import com.movieapp.application.service.TheatreService;
 import com.movieapp.domain.model.Theatre;
 import org.junit.jupiter.api.Test;

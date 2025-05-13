@@ -1,5 +1,6 @@
 package com.movieapp.controller.rest;
 
+import com.movieapp.api.rest.controller.RoleController;
 import com.movieapp.application.service.RoleService;
 import com.movieapp.domain.model.Role;
 import org.junit.jupiter.api.Test;
