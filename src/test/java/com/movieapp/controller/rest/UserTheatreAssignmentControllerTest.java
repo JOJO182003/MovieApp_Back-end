@@ -114,6 +114,7 @@ class UserTheatreAssignmentControllerTest {
                 .andExpect(jsonPath("$[0].theatreId").value(11));
     }
 
+
     // Supprime TestSecurityConfig, remplace-la par :
     @TestConfiguration
     static class SecurityOverrideConfig {

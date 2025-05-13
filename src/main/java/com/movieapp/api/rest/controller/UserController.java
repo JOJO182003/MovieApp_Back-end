@@ -10,6 +10,7 @@ import com.movieapp.api.rest.mapper.UserRestMapper;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasRole('ADMIN')")
 @RequestMapping("/api/users")
 public class UserController {
 
@@ -47,13 +49,13 @@ public class UserController {
         Role role = roleService.getById(req.getRoleId());
         String hashedPassword = passwordEncoder.encode(req.getPassword());
 
-        User toCreate = UserRestMapper.fromRequest(req)
-                .withHashedPassword(hashedPassword, LocalDateTime.now())
-                .withRole(role, LocalDateTime.now());
+        User toCreate = UserRestMapper.fromRequest(req, role)
+                .withHashedPassword(hashedPassword, LocalDateTime.now());
 
         User saved = userService.register(toCreate);
         return ResponseEntity.ok(UserRestMapper.toResponse(saved));
     }
+
 
 
     @DeleteMapping("/{id}")

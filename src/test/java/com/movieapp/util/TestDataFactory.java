@@ -1,5 +1,6 @@
 package com.movieapp.util;
 
+import com.movieapp.api.rest.dto.request.CreateUserRequest;
 import com.movieapp.domain.model.*;
 import com.movieapp.infrastructure.persistence.entity.RoleEntity;
 import com.movieapp.infrastructure.persistence.entity.UserEntity;
@@ -70,13 +71,13 @@ public class TestDataFactory {
                 .build();
     }
 
-    public static UserEntity adminUserEntity() {
-        return UserEntity.builder()
-                .id(31)
-                .username("admin1")
-                .email("admin1@movieapp.com")
-                .passwordHash("hashed_admin")
-                .build();
+    public static CreateUserRequest createUserRequest() {
+        CreateUserRequest req = new CreateUserRequest();
+        req.setUsername("newuser");
+        req.setEmail("newuser@movieapp.com");
+        req.setPassword("securePass123");
+        req.setRoleId(1);
+        return req;
     }
 
     public static User adminUser() {
