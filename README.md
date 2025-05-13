@@ -2,27 +2,125 @@
 
 ```
 com.movieapp/
-├── application/
-│   └── service/                   # Services métiers (UserService, MovieService, etc.)
-├── controller/
-│   └── rest/                      # Contrôleurs REST exposant les endpoints
+│
+├── MovieAppApplication.java
+│
+├── config/
+│   ├── SecurityConfig.java
+│   ├── CorsConfig.java
+│   ├── SwaggerConfig.java
+│   └── PasswordEncoderConfig.java
+│
 ├── domain/
-│   ├── model/                     # Modèles métiers purs (DDD, immuables)
-│   └── repository/                # Interfaces abstraites pour les repos
-├── dto/
-│   ├── request/                   # Objets reçus via l'API
-│   └── response/                  # Objets renvoyés par l'API
-├── exception/                     # Gestion centralisée des exceptions
+│   ├── model/
+│   │   ├── Movie.java
+│   │   ├── User.java
+│   │   ├── Role.java
+│   │   ├── Theatre.java
+│   │   └── MovieSchedule.java
+│   │
+│   └── repository/
+│       ├── MovieRepository.java
+│       ├── UserRepository.java
+│       ├── RoleRepository.java
+│       ├── TheatreRepository.java
+│       └── MovieScheduleRepository.java
+│
+├── application/
+│   └── service/
+│       ├── MovieService.java
+│       ├── UserService.java
+│       ├── RoleService.java
+│       ├── TheatreService.java
+│       └── MovieScheduleService.java
+│
 ├── infrastructure/
 │   └── persistence/
-│       ├── entity/               # Entités JPA mappées à la base de données
-│       ├── mapper/               # Mapping Entity ↔ Domain
-│       └── adapter/              # Implémentations concrètes des repos
-├── mapper/
-│   └── rest/                      # Mapping Domain ↔ DTO REST
-├── security/                      # Authentification, JWT, filtre, etc.
-├── util/                          # `TestDataFactory`, helpers de test
-└── MovieAppApplication.java       # Point d'entrée de l'application
+│       ├── entity/
+│       │   ├── MovieEntity.java
+│       │   ├── UserEntity.java
+│       │   ├── RoleEntity.java
+│       │   ├── TheatreEntity.java
+│       │   └── MovieScheduleEntity.java
+│       │
+│       ├── repository/
+│       │   ├── MovieRepositoryAdapter.java
+│       │   ├── UserRepositoryAdapter.java
+│       │   ├── RoleRepositoryAdapter.java
+│       │   ├── TheatreRepositoryAdapter.java
+│       │   └── MovieScheduleRepositoryAdapter.java
+│       │
+│       ├── mapper/
+│       │   ├── MovieMapper.java
+│       │   ├── UserMapper.java
+│       │   ├── RoleMapper.java
+│       │   ├── TheatreMapper.java
+│       │   └── MovieScheduleMapper.java
+│       │
+│       └── jpa/
+│           ├── MovieJpaRepository.java
+│           ├── UserJpaRepository.java
+│           ├── RoleJpaRepository.java
+│           ├── TheatreJpaRepository.java
+│           └── MovieScheduleJpaRepository.java
+│
+├── api/
+│   └── rest/
+│       ├── controller/
+│       │   ├── MovieController.java
+│       │   ├── UserController.java
+│       │   ├── RoleController.java
+│       │   ├── TheatreController.java
+│       │   └── MovieScheduleController.java
+│       │
+│       ├── dto/
+│       │   ├── request/
+│       │   │   ├── CreateMovieRequest.java
+│       │   │   ├── CreateUserRequest.java
+│       │   │   ├── CreateTheatreRequest.java
+│       │   │   ├── CreateRoleRequest.java
+│       │   │   ├── CreateMovieScheduleRequest.java
+│       │   │   ├── UpdateUserRequest.java
+│       │   │   ├── LoginRequest.java
+│       │   │   └── AssignRoleRequest.java
+│       │   │
+│       │   └── response/
+│       │       ├── MovieResponse.java
+│       │       ├── UserResponse.java
+│       │       ├── TheatreResponse.java
+│       │       ├── RoleResponse.java
+│       │       ├── MovieScheduleResponse.java
+│       │       └── AuthResponse.java
+│       │
+│       └── mapper/
+│           ├── MovieRestMapper.java
+│           ├── UserRestMapper.java
+│           ├── RoleRestMapper.java
+│           ├── TheatreRestMapper.java
+│           └── MovieScheduleRestMapper.java
+│
+├── security/
+│   ├── JwtProvider.java
+│   ├── JwtAuthenticationFilter.java
+│   ├── SecurityConstants.java
+│   ├── CustomUserDetailsService.java
+│   ├── SecurityContextUtil.java
+│   └── AuthEntryPoint.java
+│
+├── exception/
+│   ├── handler/
+│   │   └── GlobalExceptionHandler.java
+│   │
+│   ├── BusinessException.java
+│   ├── NotFoundException.java
+│   ├── UnauthorizedException.java
+│   ├── ValidationException.java
+│   └── DuplicateResourceException.java
+│
+├── util/
+│   ├── TestDataFactory.java
+│   └── MockUtils.java
+
 ```
 
 ---
