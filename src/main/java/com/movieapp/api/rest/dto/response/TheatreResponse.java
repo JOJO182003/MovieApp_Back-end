@@ -14,5 +14,7 @@ public class TheatreResponse {
         this.address = address;
     }
 
-    // Getters
+    public String getName() { return name; }
+    public String getCity() { return city; }
+    public String getAddress() { return address; }
 }

@@ -1,10 +1,10 @@
 package com.movieapp.security;
 
+import com.movieapp.application.service.CustomUserDetailsService;
 import com.movieapp.domain.model.Role;
 import com.movieapp.domain.model.User;
 import com.movieapp.domain.repository.UserRepository;
 import org.junit.jupiter.api.*;
-import org.mockito.Mockito;
 
 import java.util.Optional;
 

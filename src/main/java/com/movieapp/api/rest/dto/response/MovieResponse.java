@@ -20,5 +20,27 @@ public class MovieResponse {
         this.releaseDate = releaseDate;
     }
 
-    // Getters
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public int getDurationMinutes() {
+        return durationMinutes;
+    }
+
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
 }

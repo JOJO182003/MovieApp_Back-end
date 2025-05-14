@@ -8,6 +8,7 @@ import com.movieapp.api.rest.mapper.MovieRestMapper;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class MovieController {
         return MovieRestMapper.toResponse(service.getById(id));
     }
 
+    @PreAuthorize("hasRole('CINEMA_OWNER')")
     @PostMapping
     public ResponseEntity<MovieResponse> create(@Valid @RequestBody CreateMovieRequest req) {
         Movie toCreate = MovieRestMapper.fromRequest(req);
@@ -41,6 +43,7 @@ public class MovieController {
         return ResponseEntity.ok(MovieRestMapper.toResponse(saved));
     }
 
+    @PreAuthorize("hasRole('CINEMA_OWNER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
         service.delete(id);

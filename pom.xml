@@ -82,7 +82,10 @@
             <artifactId>jakarta.validation-api</artifactId>
             <version>3.0.2</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
         <!-- Hibernate Validator (implémentation réelle de la spec jakarta.validation) -->
         <dependency>
             <groupId>org.hibernate.validator</groupId>

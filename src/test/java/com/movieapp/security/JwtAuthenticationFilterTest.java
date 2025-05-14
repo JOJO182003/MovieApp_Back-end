@@ -1,7 +1,7 @@
 package com.movieapp.security;
 
+import com.movieapp.application.service.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.http.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
