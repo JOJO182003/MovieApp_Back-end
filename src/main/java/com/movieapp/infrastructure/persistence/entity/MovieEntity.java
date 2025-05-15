@@ -32,6 +32,8 @@ public class MovieEntity {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    private String thumbnail;
+
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<MovieScheduleEntity> schedules = new ArrayList<>();

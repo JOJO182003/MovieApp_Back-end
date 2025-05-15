@@ -2,7 +2,6 @@ package com.movieapp.domain.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 public class Movie {
 
@@ -16,6 +15,7 @@ public class Movie {
     private final LocalDate releaseDate;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
+    private String thumbnail;
 
     public Movie(int id,
                  String title,
@@ -26,7 +26,7 @@ public class Movie {
                  Integer minAge,
                  LocalDate releaseDate,
                  LocalDateTime createdAt,
-                 LocalDateTime updatedAt) {
+                 LocalDateTime updatedAt, String thumbnail) {
 
         this.id = id;
         this.title = requireNonBlank(title, "Titre requis");
@@ -82,6 +82,7 @@ public class Movie {
         return updatedAt;
     }
 
+    public String getThumbnail() { return this.thumbnail; }
     // === Méthodes utilitaires de validation ===
 
     private static String requireNonBlank(String value, String message) {
@@ -93,4 +94,5 @@ public class Movie {
         if (durationMinutes < 1) throw new IllegalArgumentException("Durée invalide");
         return durationMinutes;
     }
+
 }

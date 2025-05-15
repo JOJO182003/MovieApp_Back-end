@@ -13,7 +13,8 @@ public class MovieRestMapper {
                 movie.getLanguage(),
                 movie.getDirector(),
                 movie.getDurationMinutes(),
-                movie.getReleaseDate()
+                movie.getReleaseDate(),
+                movie.getThumbnail()
         );
     }
 
@@ -28,7 +29,7 @@ public class MovieRestMapper {
                 req.getMinAge(),
                 req.getReleaseDate(),
                 null,
-                null
-        );
+                null,
+                req.getThumbnail());
     }
 }

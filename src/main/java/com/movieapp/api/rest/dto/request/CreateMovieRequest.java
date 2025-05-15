@@ -28,6 +28,9 @@ public class CreateMovieRequest {
     @NotNull(message = "La date de sortie est requise")
     private LocalDate releaseDate;
 
+    @NotNull(message = "L'image est requise")
+    private String thumbnail;
+
     // === Getters & Setters ===
 
     public String getTitle() {
@@ -85,4 +88,6 @@ public class CreateMovieRequest {
     public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
+
+    public String getThumbnail() { return thumbnail; }
 }

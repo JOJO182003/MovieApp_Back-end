@@ -14,16 +14,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource(properties = {
-        "spring.datasource.url=jdbc:postgresql://ep-young-boat-a4027g0r-pooler.us-east-1.aws.neon.tech:5432/moviePlanner",
-        "spring.datasource.username=moviePlanner_owner",
-        "spring.datasource.password=npg_Y9HzwWybKf6n",
-        "spring.jpa.hibernate.ddl-auto=update",
-        "spring.jpa.show-sql=true",
-        "spring.main.allow-bean-definition-overriding=true",
-        "jwt.secret=Yk3YRvZnL8WXt2Fp7aU5XyqCEBmPGZY1wrEvmQmvVLFVhPbhC7yzPQzZwY5NuTz9", // ⚠️ clé base64 ou longue
-        "jwt.expirationMs=3600000"
-})
+@TestPropertySource("classpath:application-test.properties")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserIntegrationTest {
 
@@ -47,7 +38,7 @@ public class UserIntegrationTest {
         System.out.println(">>> [TEST] Vérification de la connexion à la base via /actuator/health/db");
 
         webClient.get()
-                .uri("/actuator/health/db")
+                .uri("/actuator/health")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .exchange()
                 .expectStatus().isOk()
@@ -61,16 +52,19 @@ public class UserIntegrationTest {
     void should_create_user() {
         System.out.println(">>> [TEST] Création d'un utilisateur");
 
+        String token = jwtProvider.generateToken("admin"); // ou "admin1" si existant et reconnu
+
         CreateUserRequest req = new CreateUserRequest();
         req.setUsername("john");
         req.setEmail("john@example.com");
         req.setPassword("password123");
-        req.setRoleId(1); // ce rôle doit exister
+        req.setRoleId(1); // ce rôle doit exister en BDD
 
         System.out.println(">>> Requête de création utilisateur : " + req);
 
         webClient.post()
                 .uri("/api/users")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(req)
                 .exchange()
@@ -79,20 +73,15 @@ public class UserIntegrationTest {
         System.out.println(">>> [OK] Utilisateur créé avec succès.");
     }
 
+    @Test
+    @Order(99)
+    void cleanup_user_john() {
+        String token = jwtProvider.generateToken("admin");
 
-    @AfterEach
-    void cleanup() {
-        // Only try to delete if we're past the create test
-        if (TestInfo.currentOrder > 0) {
-            webClient.delete()
-                    .uri("/api/users/username/john")
-                    .exchange()
-                    .expectStatus().isNoContent();
-        }
-    }
-
-    // Helper class to track test execution order
-    private static class TestInfo {
-        private static int currentOrder = 0;
+        webClient.delete()
+                .uri("/api/users/username/john")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .exchange()
+                .expectStatus().isNoContent();
     }
 }

@@ -32,4 +32,14 @@ public class UserService {
         if (!repo.existsById(id)) throw new NotFoundException("ID inexistant");
         repo.deleteById(id);
     }
+
+    public boolean deleteByUsername(String username) {
+        return repo.findByUsername(username)
+                .map(user -> {
+                    repo.deleteById(user.getId());
+                    return true;
+                })
+                .orElse(false);
+    }
+
 }
