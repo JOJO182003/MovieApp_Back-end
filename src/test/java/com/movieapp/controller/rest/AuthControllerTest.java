@@ -15,9 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,9 +36,13 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(controllers = AuthController.class)
-@Import({AuthControllerTest.TestSecurityConfig.class, AuthControllerTest.JacksonConfig.class})
+@WebMvcTest(AuthController.class)
+@Import(AuthControllerTest.TestConfig.class)
 class AuthControllerTest {
+
+    private static final String TOKEN = "fake.jwt.token";
+
+    private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
     @Autowired
     private MockMvc mockMvc;
@@ -50,13 +53,8 @@ class AuthControllerTest {
     @Autowired
     private JwtProvider jwtProvider;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    private final String token = "fake.jwt.token";
-
     @BeforeEach
-    void setup() {
+    void setUp() {
         reset(authenticationManager, jwtProvider);
     }
 
@@ -76,7 +74,7 @@ class AuthControllerTest {
         Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
         when(authenticationManager.authenticate(any())).thenReturn(auth);
-        when(jwtProvider.generateToken("testuser")).thenReturn(token);
+        when(jwtProvider.generateToken("testuser")).thenReturn(TOKEN);
 
         mockMvc.perform(post("/api/auth/login")
                         .with(csrf())
@@ -84,7 +82,7 @@ class AuthControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(loginRequest)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.token").value(token))
+                .andExpect(jsonPath("$.token").value(TOKEN))
                 .andExpect(jsonPath("$.username").value("testuser"));
     }
 
@@ -133,10 +131,9 @@ class AuthControllerTest {
         }
     }
 
-    @Configuration
-    static class TestSecurityConfig {
+    @TestConfiguration
+    static class TestConfig {
         @Bean
-        @Primary
         public AuthenticationManager authenticationManager() {
             return mock(AuthenticationManager.class);
         }
@@ -147,32 +144,26 @@ class AuthControllerTest {
         }
 
         @Bean
-        public AuthEntryPoint authEntryPoint(ObjectMapper objectMapper) {
-            return new AuthEntryPoint(objectMapper);
+        public AuthEntryPoint authEntryPoint() {
+            return new AuthEntryPoint(new ObjectMapper().registerModule(new JavaTimeModule()));
         }
 
-        @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthEntryPoint authEntryPoint) throws Exception {
-            return http
-                    .csrf(AbstractHttpConfigurer::disable)
-                    .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                    .exceptionHandling(e -> e.authenticationEntryPoint(authEntryPoint))
-                    .authorizeHttpRequests(auth -> auth
-                            .requestMatchers("/api/auth/login").permitAll()
-                            .anyRequest().authenticated()
-                    )
-                    .build();
-        }
-    }
-
-    @Configuration
-    static class JacksonConfig {
         @Bean
         @Primary
         public ObjectMapper objectMapper() {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.registerModule(new JavaTimeModule());
-            return objectMapper;
+            return new ObjectMapper().registerModule(new JavaTimeModule());
+        }
+
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+            return http
+                    .csrf(AbstractHttpConfigurer::disable)
+                    .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                    .exceptionHandling(e -> e.authenticationEntryPoint(authEntryPoint()))
+                    .authorizeHttpRequests(auth -> auth
+                            .requestMatchers("/api/auth/login").permitAll()
+                            .anyRequest().authenticated())
+                    .build();
         }
     }
 }
