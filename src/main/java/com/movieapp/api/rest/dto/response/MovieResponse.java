@@ -45,4 +45,6 @@ public class MovieResponse {
     public LocalDate getReleaseDate() {
         return releaseDate;
     }
+
+    public String getThumbnail() {return thumbnail;}
 }
