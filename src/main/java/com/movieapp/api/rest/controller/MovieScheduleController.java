@@ -8,6 +8,7 @@ import com.movieapp.api.rest.mapper.MovieScheduleRestMapper;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,6 +39,7 @@ public class MovieScheduleController {
         return MovieScheduleRestMapper.toResponse(service.getById(id));
     }
 
+    @PreAuthorize("hasRole('CINEMA_OWNER')")
     @PostMapping
     public ResponseEntity<MovieScheduleResponse> create(@Valid @RequestBody CreateMovieScheduleRequest req) {
         Movie movie = movieService.getById(req.getMovieId());
@@ -49,6 +51,7 @@ public class MovieScheduleController {
         return ResponseEntity.ok(MovieScheduleRestMapper.toResponse(saved));
     }
 
+    @PreAuthorize("hasRole('CINEMA_OWNER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
         service.delete(id);

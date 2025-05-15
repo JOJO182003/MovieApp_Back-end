@@ -1,5 +1,6 @@
 package com.movieapp.security;
 
+import com.movieapp.application.service.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

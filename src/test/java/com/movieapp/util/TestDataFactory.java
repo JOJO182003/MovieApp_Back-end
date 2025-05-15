@@ -1,11 +1,15 @@
 package com.movieapp.util;
 
+import com.movieapp.api.rest.dto.request.CreateMovieRequest;
+import com.movieapp.api.rest.dto.request.CreateMovieScheduleRequest;
+import com.movieapp.api.rest.dto.request.CreateTheatreRequest;
 import com.movieapp.api.rest.dto.request.CreateUserRequest;
 import com.movieapp.domain.model.*;
 import com.movieapp.infrastructure.persistence.entity.RoleEntity;
 import com.movieapp.infrastructure.persistence.entity.UserEntity;
 import com.movieapp.infrastructure.persistence.entity.UserTheatreAssignmentEntity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -59,6 +63,17 @@ public class TestDataFactory {
     public static Theatre theatreNice12() {
         return new Theatre(12, "Ciné Lumière 12", "Nice", "10 avenue des Anglais");
     }
+
+    // ==== CREATE THEATRE REQUESTS ====
+
+    public static CreateTheatreRequest createTheatreRequestLyon1() {
+        CreateTheatreRequest req =  new CreateTheatreRequest();
+        req.setName(theatreLyon1().getName());
+        req.setCity(theatreLyon1().getCity());
+        req.setAddress(theatreLyon1().getAddress());
+        return req;
+    }
+
 
     // ==== USERS ====
     public static UserEntity ownerUserEntity() {
@@ -128,6 +143,14 @@ public class TestDataFactory {
     }
 
     // ==== SCHEDULES ====
+    public static CreateMovieScheduleRequest createMovieScheduleRequest1() {
+        CreateMovieScheduleRequest request = new CreateMovieScheduleRequest();
+        request.setMovieId(1);
+        request.setTheatreId(1);
+        request.setStartTime(LocalDateTime.of(2025, 6, 1, 20, 0));
+        return request;
+    }
+
 
     public static MovieSchedule scheduleInceptionMarseille() {
         return new MovieSchedule(1001, movieInception(), theatreMarseille3(),
@@ -176,4 +199,13 @@ public class TestDataFactory {
     private static LocalDateTime now() {
         return LocalDateTime.now();
     }
+
+    public static CreateMovieRequest createMovieRequest1() {
+        CreateMovieRequest request = new CreateMovieRequest();
+        request.setTitle("Inception");
+        request.setSynopsis("A mind-bending thriller");
+        request.setDurationMinutes(148);
+        return request;
+    }
+
 }

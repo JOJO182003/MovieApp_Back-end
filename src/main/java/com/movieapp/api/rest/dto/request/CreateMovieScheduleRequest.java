@@ -2,7 +2,9 @@ package com.movieapp.api.rest.dto.request;
 
 import jakarta.validation.constraints.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
@@ -76,6 +78,10 @@ public class CreateMovieScheduleRequest {
 
     public void setTime(LocalTime time) {
         this.time = time;
+    }
+
+    public void setStartTime(LocalDateTime localDateTime) {
+        this.startDate = localDateTime.toLocalDate();
     }
 }
 

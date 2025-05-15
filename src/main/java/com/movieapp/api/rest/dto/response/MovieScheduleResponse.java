@@ -23,5 +23,32 @@ public class MovieScheduleResponse {
         this.time = time;
     }
 
-    // Getters
+    public int getId() {
+        return id;
+    }
+
+    public String getMovieTitle() {
+        return movieTitle;
+    }
+
+    public String getTheatreName() {
+        return theatreName;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public String getDaysOfWeek() {
+        return daysOfWeek;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
 }
+
