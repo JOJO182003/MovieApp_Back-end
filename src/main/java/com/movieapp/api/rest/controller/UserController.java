@@ -32,9 +32,10 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<UserResponse> all() {
-        return userService.getAll().stream()
+        return userService.findAllCinemaOwners().stream()
                 .map(UserRestMapper::toResponse)
                 .toList();
     }

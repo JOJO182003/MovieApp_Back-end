@@ -34,9 +34,11 @@ public class MovieScheduleController {
                 .toList();
     }
 
-    @GetMapping("/{id}")
-    public MovieScheduleResponse get(@PathVariable int id) {
-        return MovieScheduleRestMapper.toResponse(service.getById(id));
+    @GetMapping("/get/{id}")
+    public List<MovieScheduleResponse> get(@PathVariable int id) {
+        return service.findByMovieId(id).stream()
+                .map(MovieScheduleRestMapper::toResponse)
+                .toList();
     }
 
     @PreAuthorize("hasRole('CINEMA_OWNER')")

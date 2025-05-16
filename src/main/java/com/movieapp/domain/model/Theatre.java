@@ -2,12 +2,12 @@ package com.movieapp.domain.model;
 
 public class Theatre {
 
-    private final int id;
+    private final Integer id;
     private final String name;
     private final String city;
     private final String address;
 
-    public Theatre(int id, String name, String city, String address) {
+    public Theatre(Integer id, String name, String city, String address) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Nom requis");
         }
@@ -24,7 +24,7 @@ public class Theatre {
         this.address = address;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

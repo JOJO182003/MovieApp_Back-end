@@ -38,6 +38,7 @@ public class Movie {
         this.releaseDate = releaseDate;
         this.createdAt = createdAt != null ? createdAt : LocalDateTime.now();
         this.updatedAt = updatedAt != null ? updatedAt : LocalDateTime.now();
+        this.thumbnail = thumbnail;
     }
 
     // === Getters ===

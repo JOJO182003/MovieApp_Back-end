@@ -20,6 +20,10 @@ public class UserService {
         return repo.findAll();
     }
 
+    public List<User> findAllCinemaOwners() {
+        return repo.findAllCinemaOwners();
+    }
+
     public User getById(int id) {
         return repo.findById(id).orElseThrow(() -> new NotFoundException("Utilisateur non trouvé : " + id));
     }

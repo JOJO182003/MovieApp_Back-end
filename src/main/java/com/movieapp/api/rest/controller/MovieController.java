@@ -30,7 +30,7 @@ public class MovieController {
                 .toList();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public MovieResponse get(@PathVariable int id) {
         return MovieRestMapper.toResponse(service.getById(id));
     }
