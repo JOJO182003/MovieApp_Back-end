@@ -7,9 +7,7 @@ import com.movieapp.api.rest.dto.request.CreateUserRequest;
 import com.movieapp.domain.model.*;
 import com.movieapp.infrastructure.persistence.entity.RoleEntity;
 import com.movieapp.infrastructure.persistence.entity.UserEntity;
-import com.movieapp.infrastructure.persistence.entity.UserTheatreAssignmentEntity;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -119,27 +117,27 @@ public class TestDataFactory {
 
     public static Movie movieInception() {
         return new Movie(9, "Film 9", "Synopsis du film 9.", 127, "Anglais (VO st FR)",
-                "James Cameron", 0, LocalDate.of(2010, 4, 15), now(), now());
+                "James Cameron", 0, LocalDate.of(2010, 4, 15), now(), now(), "test");
     }
 
     public static Movie movieSpielberg() {
         return new Movie(10, "Film 10", "Synopsis du film 10.", 86, "Anglais (VO st FR)",
-                "Steven Spielberg", 16, LocalDate.of(2021, 2, 1), now(), now());
+                "Steven Spielberg", 16, LocalDate.of(2021, 2, 1), now(), now(), "test");
     }
 
     public static Movie movieTarentino() {
         return new Movie(20, "Film 20", "Synopsis du film 20.", 155, "Allemand",
-                "Quentin Tarantino", 0, LocalDate.of(2011, 3, 2), now(), now());
+                "Quentin Tarantino", 0, LocalDate.of(2011, 3, 2), now(), now(), "tes");
     }
 
     public static Movie movieFuturePast() {
         return new Movie(23, "Future Past", "Une boucle temporelle sans fin à New York", 145,
-                "Anglais", "David Fincher", 16, LocalDate.of(2024, 6, 21), now(), now());
+                "Anglais", "David Fincher", 16, LocalDate.of(2024, 6, 21), now(), now(), "test");
     }
 
     public static Movie movieFrenchDrama() {
         return new Movie(22, "Cinéma Vérité", "Un cinéma lutte contre les géants du streaming.",
-                108, "Français", "Jean-Pierre Jeunet", 10, LocalDate.of(2022, 12, 15), now(), now());
+                108, "Français", "Jean-Pierre Jeunet", 10, LocalDate.of(2022, 12, 15), now(), now(), "test");
     }
 
     // ==== SCHEDULES ====

@@ -43,6 +43,7 @@ public class UserTheatreAssignmentController {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasRole('CINEMA_OWNER') || hasRole('ADMIN')")
     @GetMapping("/user/{userId}")
     public List<UserTheatreAssignmentResponse> byUser(@PathVariable int userId) {
         return service.getByUser(userId).stream()

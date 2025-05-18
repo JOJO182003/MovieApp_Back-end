@@ -20,6 +20,10 @@ public class UserService {
         return repo.findAll();
     }
 
+    public List<User> findAllCinemaOwners() {
+        return repo.findAllCinemaOwners();
+    }
+
     public User getById(int id) {
         return repo.findById(id).orElseThrow(() -> new NotFoundException("Utilisateur non trouvé : " + id));
     }
@@ -32,4 +36,14 @@ public class UserService {
         if (!repo.existsById(id)) throw new NotFoundException("ID inexistant");
         repo.deleteById(id);
     }
+
+    public boolean deleteByUsername(String username) {
+        return repo.findByUsername(username)
+                .map(user -> {
+                    repo.deleteById(user.getId());
+                    return true;
+                })
+                .orElse(false);
+    }
+
 }

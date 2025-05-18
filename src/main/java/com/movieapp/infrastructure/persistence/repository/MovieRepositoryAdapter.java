@@ -2,6 +2,7 @@ package com.movieapp.infrastructure.persistence.repository;
 
 import com.movieapp.domain.model.Movie;
 import com.movieapp.domain.repository.MovieRepository;
+import com.movieapp.infrastructure.persistence.entity.MovieEntity;
 import com.movieapp.infrastructure.persistence.mapper.MovieMapper;
 import com.movieapp.infrastructure.persistence.jpa.MovieJpaRepository;
 import org.springframework.stereotype.Repository;
@@ -21,7 +22,9 @@ public class MovieRepositoryAdapter implements MovieRepository {
 
     @Override
     public List<Movie> findAll() {
-        return jpa.findAll().stream().map(MovieMapper::toDomain).collect(Collectors.toList());
+        return jpa.findAll().stream()
+                .map(MovieMapper::toDomain)
+                .collect(Collectors.toList());
     }
 
     @Override

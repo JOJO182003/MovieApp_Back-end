@@ -14,7 +14,7 @@ class MovieMapperTest {
     @Test
     void should_map_domain_to_entity_and_back() {
         Movie movie = new Movie(1, "Title", "Synopsis", 120, "EN", "Director", 12,
-                LocalDate.of(2020, 1, 1), LocalDateTime.now(), LocalDateTime.now());
+                LocalDate.of(2020, 1, 1), LocalDateTime.now(), LocalDateTime.now(), "test");
 
         MovieEntity entity = MovieMapper.toEntity(movie);
         Movie mapped = MovieMapper.toDomain(entity);

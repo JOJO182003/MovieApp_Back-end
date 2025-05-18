@@ -32,9 +32,10 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<UserResponse> all() {
-        return userService.getAll().stream()
+        return userService.findAllCinemaOwners().stream()
                 .map(UserRestMapper::toResponse)
                 .toList();
     }
@@ -56,11 +57,18 @@ public class UserController {
         return ResponseEntity.ok(UserRestMapper.toResponse(saved));
     }
 
-
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
         userService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/username/{username}")
+    public ResponseEntity<Void> deleteByUsername(@PathVariable String username) {
+        boolean deleted = userService.deleteByUsername(username);
+        if (!deleted) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.noContent().build();
     }
 }

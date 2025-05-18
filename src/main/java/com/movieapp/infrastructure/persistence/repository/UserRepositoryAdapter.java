@@ -2,6 +2,7 @@ package com.movieapp.infrastructure.persistence.repository;
 
 import com.movieapp.domain.model.User;
 import com.movieapp.domain.repository.UserRepository;
+import com.movieapp.infrastructure.persistence.entity.RoleEntity;
 import com.movieapp.infrastructure.persistence.mapper.UserMapper;
 import com.movieapp.infrastructure.persistence.jpa.UserJpaRepository;
 import org.springframework.stereotype.Repository;
@@ -22,6 +23,11 @@ public class UserRepositoryAdapter implements UserRepository {
     @Override
     public List<User> findAll() {
         return jpa.findAll().stream().map(UserMapper::toDomain).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<User> findAllCinemaOwners(){
+        return jpa.findAllByRole(new RoleEntity(2,"CINEMA_OWNER")).stream().map(UserMapper::toDomain).collect(Collectors.toList());
     }
 
     @Override

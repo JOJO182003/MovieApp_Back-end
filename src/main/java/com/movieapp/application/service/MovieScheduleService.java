@@ -20,6 +20,10 @@ public class MovieScheduleService {
         return repo.findAll();
     }
 
+    public List<MovieSchedule> findByMovieId(int id) {
+        return repo.findByMovieId(id);
+    }
+
     public MovieSchedule getById(int id) {
         return repo.findById(id).orElseThrow(() -> new NotFoundException("Projection non trouvée"));
     }

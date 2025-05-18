@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MovieScheduleTest {
 
     private final Movie movie = new Movie(1, "Film", "Desc", 100, "EN", "Dir", 10,
-            LocalDate.of(2020, 1, 1), null, null);
+            LocalDate.of(2020, 1, 1), null, null, "test");
     private final Theatre theatre = new Theatre(1, "UGC", "Marseille", "Rue A");
 
     @Test

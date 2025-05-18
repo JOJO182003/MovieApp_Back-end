@@ -17,7 +17,7 @@ public class TheatreRestMapper {
 
     public static Theatre fromRequest(CreateTheatreRequest req) {
         return new Theatre(
-                0,
+                null,
                 req.getName(),
                 req.getCity(),
                 req.getAddress()

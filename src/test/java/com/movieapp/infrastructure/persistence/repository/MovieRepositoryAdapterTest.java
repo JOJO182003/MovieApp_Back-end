@@ -53,7 +53,7 @@ class MovieRepositoryAdapterTest {
     void save_should_map_and_return() {
         Movie movie = new Movie(5, "Titre", "Synopsis", 120, "VO",
                 "Nolan", 16, LocalDate.of(2020, 1, 1),
-                LocalDateTime.now(), LocalDateTime.now());
+                LocalDateTime.now(), LocalDateTime.now(), "test");
 
         MovieEntity returnedEntity = MovieEntity.builder()
                 .id(5)

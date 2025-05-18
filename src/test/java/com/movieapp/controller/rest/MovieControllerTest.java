@@ -44,7 +44,8 @@ class MovieControllerTest {
 
         mockMvc.perform(get("/api/movies"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(movie.getId()));
+                .andExpect(jsonPath("$[0].id").value(movie.getId()))
+                .andExpect(jsonPath("$[0].thumbnail").value(movie.getThumbnail()));
     }
 
     @Test
@@ -54,7 +55,8 @@ class MovieControllerTest {
 
         mockMvc.perform(get("/api/movies/9"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(movie.getId()));
+                .andExpect(jsonPath("$.id").value(movie.getId()))
+                .andExpect(jsonPath("$.thumbnail").value(movie.getThumbnail()));
     }
 
     @Test
@@ -74,7 +76,8 @@ class MovieControllerTest {
                           "durationMinutes": 148,
                           "language": "English",
                           "director": "Christopher Nolan",
-                          "releaseDate": "2010-07-16"
+                          "releaseDate": "2010-07-16",
+                          "thumbnail": "https://example.com/inception.jpg"
                             }
                         """))
                 .andExpect(status().isOk())

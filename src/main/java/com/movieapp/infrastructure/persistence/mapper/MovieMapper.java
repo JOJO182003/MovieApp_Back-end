@@ -16,7 +16,8 @@ public class MovieMapper {
                 entity.getMinAge(),
                 entity.getReleaseDate(),
                 entity.getCreatedAt(),
-                entity.getUpdatedAt()
+                entity.getUpdatedAt(),
+                entity.getThumbnail()
         );
     }
 
@@ -32,6 +33,7 @@ public class MovieMapper {
         entity.setReleaseDate(domain.getReleaseDate());
         entity.setCreatedAt(domain.getCreatedAt());
         entity.setUpdatedAt(domain.getUpdatedAt());
+        entity.setThumbnail(domain.getThumbnail());
         return entity;
     }
 }
